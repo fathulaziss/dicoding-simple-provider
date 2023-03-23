@@ -1,44 +1,24 @@
+import 'package:dicoding_simple_setstate/data/module_list_data.dart';
+import 'package:dicoding_simple_setstate/provider/module_done_provider.dart';
 import 'package:dicoding_simple_setstate/widgets/module_tile_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ModuleListWidget extends StatefulWidget {
-  const ModuleListWidget({
-    Key? key,
-    required this.doneModuleList,
-  }) : super(key: key);
-
-  final List<String> doneModuleList;
-
-  @override
-  State<ModuleListWidget> createState() => _ModuleListWidgetState();
-}
-
-class _ModuleListWidgetState extends State<ModuleListWidget> {
-  final List<String> _moduleList = const [
-    'Modul 1 - Pengenalan Dart',
-    'Modul 2 - Program Dart Pertamamu',
-    'Modul 3 - Dart Fundamental',
-    'Modul 4 - Control Flow',
-    'Modul 5 - Collections',
-    'Modul 6 - Object Oriented Programming',
-    'Modul 7 - Functional Styles',
-    'Modul 8 - Dart Type System',
-    'Modul 9 - Dart Futures',
-    'Modul 10 - Effective Dart',
-  ];
+class ModuleListWidget extends StatelessWidget {
+  const ModuleListWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: _moduleList.length,
+      itemCount: moduleListData.length,
       itemBuilder: (context, index) {
-        return ModuleTileWidget(
-          moduleName: _moduleList[index],
-          isDone: widget.doneModuleList.contains(_moduleList[index]),
-          onClick: () {
-            setState(() {
-              widget.doneModuleList.add(_moduleList[index]);
-            });
+        return Consumer<ModuleDoneProvider>(
+          builder: (context, ModuleDoneProvider data, widget) {
+            return ModuleTileWidget(
+              moduleName: moduleListData[index],
+              isDone: data.doneModuleList.contains(moduleListData[index]),
+              onClick: () => data.complete(moduleListData[index]),
+            );
           },
         );
       },

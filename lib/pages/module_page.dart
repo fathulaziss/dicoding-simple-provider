@@ -2,17 +2,10 @@ import 'package:dicoding_simple_setstate/pages/module_done_page.dart';
 import 'package:dicoding_simple_setstate/widgets/module_list_widget.dart';
 import 'package:flutter/material.dart';
 
-class ModulePage extends StatefulWidget {
+class ModulePage extends StatelessWidget {
   const ModulePage({Key? key}) : super(key: key);
 
   static const routeName = '/module';
-
-  @override
-  State<ModulePage> createState() => _ModulePageState();
-}
-
-class _ModulePageState extends State<ModulePage> {
-  final List<String> doneModuleList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -23,16 +16,12 @@ class _ModulePageState extends State<ModulePage> {
           IconButton(
             icon: const Icon(Icons.done),
             onPressed: () {
-              Navigator.pushNamed(
-                context,
-                ModuleDonePage.routeName,
-                arguments: doneModuleList,
-              );
+              Navigator.pushNamed(context, ModuleDonePage.routeName);
             },
           ),
         ],
       ),
-      body: ModuleListWidget(doneModuleList: doneModuleList),
+      body: const ModuleListWidget(),
     );
   }
 }
